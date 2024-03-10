@@ -1,0 +1,3 @@
+Resolved the permission denied to suhailnovo123 by using commnads. the problem was git was using the old credential.
+git config user.name "Suhail Ahmad"
+git config credential.username "Suhail Ahmad"

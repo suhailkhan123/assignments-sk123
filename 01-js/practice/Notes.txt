@@ -1,0 +1,3 @@
+1. when running the javascript code in mac and run the command htop, 
+single core was on 99% but in ubuntu no single core was going to 99 or 100% 
+instead it was doing context switching, need to ask this quesiotn from charGPT.

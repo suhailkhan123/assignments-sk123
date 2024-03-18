@@ -43,7 +43,69 @@
   const bodyParser = require('body-parser');
   
   const app = express();
-  
   app.use(bodyParser.json());
+
+  const todoList = [];
+
+  //   1.GET /todos - Retrieve all todo items
+  app.get("/todos", function(req, res) {
+    res.json(todoList);
+  });
+
+  //   2.GET /todos/:id - Retrieve a specific todo item by ID
+  app.get("/todos/:id", function(req, res) {
+    const todoId = req.params.id;
+    const todo = todoList.find(item => { return item.id === parseInt(todoId) })
+    if(todo) {
+      res.status(200).json(todo);
+    } else {
+      res.status(404).send();
+    }
+  })
+
+  // 3. POST /todos - Create a new todo item
+  app.post("/todos", function(req, res) {
+    const todo = {
+      id: getThreeDigitId(),
+      title: req.body.title,
+      description: req.body.description,
+      completed: req.body.completed
+    }
+    todoList.push(todo);
+    res.status(201).json(todo);
+  });
+  // 4. PUT /todos/:id - Update an existing todo item by ID
+  app.put("/todos/:id", function(req, res) {
+    const todoId = req.params.id;
+    const todo = todoList.find(item => { return item.id === parseInt(todoId) })
+    if(todo) {
+      todo.title = req.body.title;
+      todo.description = req.body.description;
+      todo.completed = req.body.completed;
+      res.status(200).json(todo);
+    } else {
+      res.status(404).send();
+    }
+  })
+
+  //   5. DELETE /todos/:id - Delete a todo item by ID
+  app.delete("/todos/:id", function(req, res) {
+    const todoId = req.params.id;
+    const todoIndex = todoList.find(item => { return item.id === parseInt(todoId) })
+    if(todoIndex) {
+      todoList.splice(todoIndex, 1);
+      res.status(200).send();
+    } else {
+      res.status(404).send();
+    }
+  })
   
+  app.use((req, res, next) => {
+    res.status(404).send();
+  });
+  
+  function getThreeDigitId() {
+    return Math.floor(Math.random() * 1000);
+  }
   module.exports = app;
+  

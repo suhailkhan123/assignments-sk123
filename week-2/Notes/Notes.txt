@@ -1,0 +1,17 @@
+=> mkdir: to create a folder
+          example: mkdir new-folder 
+=> touch: to create a file
+          example => touch index.js
+=> cat:   to view the content of a file
+          example: cat index.js
+=> vi:    vim editor, to view, edit and save the files
+          example: vi index.js
+          to start editin the file press "i"
+          to quit the file, press Esc, then type :q! and press Enter
+          to quit and save the file, press Esc, then type :wq! and press Enter
+=> mv:    to move file or folder from one place to another
+          example: mv index.js new-folder/ or mv test1 test2
+=> cp:    to copy file or folder from one place to another
+          example: cp index.js new-folder/ or mv -r test1 test2
+          -r is added in the above command because test1 folder canhave someting inside it and 
+          -r telling cp command that you have copu not just folder but also the all content inside it.

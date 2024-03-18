@@ -17,5 +17,32 @@ const fs = require('fs');
 const path = require('path');
 const app = express();
 
+// 1. GET /files - Returns a list of files present in `./files/` directory
+// . means: C:\Users\suhai\Music\Projects\Cohort-2\assignments-sk123 [directory opened in vs code]
+// __dirname means: C:\Users\suhai\Music\Projects\Cohort-2\assignments-sk123\week-2\02-nodejs [directory where running file resides]
+app.get("/files", function(req, res) {
+  fs.readdir(path.join(__dirname, './files/'), function(error, files) {
+    if (error) {
+      return res.status(500).json({ error: 'Failed to retrieve files' });
+    }
+    res.status(200).json(files);
+  })
+})
+
+//   2. GET /file/:filename - Returns content of given file by name
+app.get("/file/:filename", function(req, res) {
+  const filename = path.join(__dirname, './files/', req.params.filename);
+  fs.readFile(filename, "UTF-8", function(error, data) {
+    if(error) {
+      res.status(404).send("File not found");
+    }
+    res.status(200).send(data);
+  })
+})
+
+app.all('*', (req, res) => {
+  res.status(404).send('Route not found');
+});
+
 
 module.exports = app;
